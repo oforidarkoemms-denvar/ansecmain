@@ -410,7 +410,7 @@ body.al-locked { overflow: hidden !important; }
     top: var(--al-total-h);                 /* start below topbar + navbar */
 
     width: min(340px, 90vw);
-    height: calc(100vh - var(--al-total-h));
+    height: calc var(--al-total-h);
 
     background: var(--al-white);
     z-index: var(--al-z-menu);
