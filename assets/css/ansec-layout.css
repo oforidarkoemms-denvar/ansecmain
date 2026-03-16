@@ -406,7 +406,7 @@ body.al-locked { overflow: hidden !important; }
 
   .al-menu {
     position: fixed;
-    top: 0; right: 0;
+  right: 0;
     width: min(340px, 90vw);
     height: 100%;
     height: 100dvh;
@@ -418,8 +418,11 @@ body.al-locked { overflow: hidden !important; }
     overflow-y: auto; -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
     box-shadow: -8px 0 40px var(--al-shadow-hv);
-    padding-top: var(--al-total-h); /* push content below fixed navbar */
+   top: var(--al-total-h);        /* start below header */
+    height: calc(100dvh - var(--al-total-h));
+    padding-top: 0; 
   }
+
   .al-menu.al-open { transform: translateX(0); }
 
   /* Overlay: only display inside mobile breakpoint, pointer-events off when hidden */
@@ -464,42 +467,26 @@ body.al-locked { overflow: hidden !important; }
   .al-mob-di:hover { background: var(--al-blue-soft); color: var(--al-navy); }
 }
 
-/* Panel header — lives in the navbar row on mobile, hidden on desktop */
+/* Panel header (mobile only) */
 .al-panel-head {
-  display: none; /* shown only inside ≤992px via rule below */
-  align-items: center; gap: 0.5rem;
-  flex: 1; /* fills the space between wordmark and burger */
-  justify-content: flex-end;
-  padding: 0; border: none; /* no drawer chrome — it's in the navbar now */
-  flex-shrink: 1; overflow: hidden;
+  display: none;
+  align-items: center; justify-content: space-between;
+  padding: 1.1rem 1.5rem 0.9rem;
+  border-bottom: 1px solid #e5e5e5; flex-shrink: 0;
 }
 .al-panel-label {
-  font-family: var(--al-sans);
-  font-size: 0.78rem; font-weight: 600;
-  color: var(--al-navy); letter-spacing: 0.04em;
-  white-space: nowrap; opacity: 0.55;
+  font-family: var(--al-serif);
+  font-size: 1.05rem; font-weight: 700; color: #0d1b2a;
 }
 .al-panel-close {
-  width: 36px; height: 36px; flex-shrink: 0;
+  width: 36px; height: 36px;
   display: flex; align-items: center; justify-content: center;
   border-radius: 7px; background: none; border: none;
   cursor: pointer; font-size: 1.25rem; color: #3a4a5c;
   transition: background var(--al-tr), color var(--al-tr);
-  /* hidden until menu is open */
-  opacity: 0; pointer-events: none;
-  transition: opacity var(--al-tr), background var(--al-tr), color var(--al-tr);
 }
 .al-panel-close:hover { background: #f5f5f5; color: var(--al-red); }
-/* Show close button only when menu is open */
-.al-menu.al-open ~ * .al-panel-close,
-.al-navbar:has(.al-menu.al-open) .al-panel-close {
-  opacity: 1; pointer-events: auto;
-}
-@media (max-width: 992px) {
-  .al-panel-head { display: flex; }
-  /* Remove the drawer's own top padding — panel-head is now in the navbar */
-  .al-menu { padding-top: 0; }
-}
+@media (max-width: 992px) { .al-panel-head { display: flex; } }
 
 /* Panel footer CTAs (mobile only) */
 .al-panel-foot {
@@ -538,6 +525,7 @@ body.al-locked { overflow: hidden !important; }
 .al-pf-admissions:hover { background: #0062c9; }
 .al-pf-admissions i { font-size: 1rem; }
 
+/* Hide panel-only chrome on desktop */
 @media (min-width: 993px) {
   .al-panel-head, .al-panel-foot, .al-mob-nav { display: none; }
   .al-menu { display: contents; } /* panel invisible on desktop — nav list shows instead */
